@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hotel Room Reservation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+        header {
+            background-color: #6e4b3a; /* brown color */
+            padding: 40px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 42px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        nav {
+            background-color: #d1b39e; /* light brown */
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #6e4b3a;
+        }
+        section {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+        .room {
+            background-color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .room:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        .room img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 4px solid #6e4b3a;
+        }
+        .room h3 {
+            font-size: 24px;
+            color: #6e4b3a;
+            margin: 15px 0;
+        }
+        .room p {
+            font-size: 16px;
+            color: #555;
+            margin: 0;
+            padding-bottom: 15px;
+        }
+        .room button {
+            background-color: #6e4b3a;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .room button:hover {
+            background-color: #5b3f2a;
+            transform: translateY(-2px);
+        }
+        .reservation-details {
+            display: none;
+            background-color: #ffffff;
+            padding: 25px;
+            margin: 20px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .reservation-details h2 {
+            color: #6e4b3a;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .reservation-details p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+        }
+        footer {
+            background-color: #6e4b3a;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            font-size: 16px;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        footer a:hover {
+            color: #d1b39e;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .form-container {
+            display: none;
+            background-color: white;
+            padding: 30px;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            box-sizing: border-box;
+            margin: auto;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #6e4b3a;
+        }
+        .form-container input,
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .form-container input[type="date"] {
+            background-color: #f7f7f7;
+            border: 1px solid #6e4b3a;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        .form-container input[type="date"]:focus {
+            border-color: #5b3f2a;
+            outline: none;
+        }
+        .form-container input[type="date"]:hover {
+            border-color: #d1b39e;
+        }
+        .form-container button {
+            background-color: #6e4b3a;
+            color: white;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #5b3f2a;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Hotel Reservation System</h1>
+    </header>
+
+    <nav>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact Us</a>
+    </nav>
+
+
+    
+
+    <section id="room-options">
+        <!-- Rooms will be inserted dynamically here -->
+    </section>
+
+    <section class="reservation-details" id="reservation-details">
+        <h2>Reservation Details</h2>
+        <p id="chosen-room"></p>
+        <p><strong>Name:</strong> <span id="customer-name"></span></p>
+        <p><strong>Email:</strong> <span id="customer-email"></span></p>
+        <p><strong>Contact:</strong> <span id="customer-contact"></span></p>
+        <p><strong>Check-in:</strong> <span id="check-in-date"></span></p>
+        <p><strong>Check-out:</strong> <span id="check-out-date"></span></p>
+        <p><strong>Total Price:</strong> ₱<span id="total-price"></span></p>
+    
+        <button type="button" id="confirm-button" class="confirm-button">Confirm Reservation</button>
+    </section>
+    
+    <script>
+        document.getElementById("confirm-button").addEventListener("click", async function () {
+            const reservationData = {
+                room: document.getElementById("chosen-room").textContent.trim(),
+                total_price: parseFloat(document.getElementById("total-price").textContent.trim()),
+                customer_name: document.getElementById("customer-name").textContent.trim(),
+                customer_email: document.getElementById("customer-email").textContent.trim(),
+                customer_contact: document.getElementById("customer-contact").textContent.trim(),
+                check_in_date: document.getElementById("check-in-date").textContent.trim(),
+                check_out_date: document.getElementById("check-out-date").textContent.trim(),
+            };
+    
+            // Validation to ensure all fields are filled
+            if (
+                !reservationData.room ||
+                !reservationData.customer_name ||
+                !reservationData.customer_email ||
+                !reservationData.customer_contact ||
+                !reservationData.check_in_date ||
+                !reservationData.check_out_date
+            ) {
+                alert("Please fill in all the reservation details.");
+                return;
+            }
+    
+            try {
+                const response = await fetch("reserve.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(reservationData),
+                });
+    
+                const result = await response.json();
+                if (result.success) {
+                    alert(result.message);
+                    // Optionally, redirect or clear the form
+                    location.reload();
+                } else {
+                    alert("Error: " + result.message);
+                }
+            } catch (error) {
+                console.error("Fetch error:", error);
+                alert("Failed to send reservation data. Please try again later.");
+            }
+        });
+    </script>
+    
+        
+        
+
+    </section>
+
+    <div class="form-container" id="form-container">
+        <h2>Complete Reservation</h2>
+        <form id="reservation-form">
+            <input type="text" id="name" placeholder="Enter your name" required>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="text" id="contact" placeholder="Enter your contact number" required>
+            <label for="check-in">Check-in Date:</label>
+            <input type="date" id="check-in" required>
+            <label for="check-out">Check-out Date:</label>
+            <input type="date" id="check-out" required>
+            <button type="submit">Submit Reservation</button>
+        </form>
+    </div>
+
+
+    <footer id="about">
+        <p>Hotel XYZ | <a href="#contact">Contact Us</a> | <a href="#about">About Us</a></p>
+        <p>&copy; 2025 Hotel XYZ. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Room data object, can be expanded
+
+        const rooms = [
+            { name: 'Single Bedroom', price: 2500, description: 'A simple and comfortable room for solo travelers.', image: 'single.jpg' },
+            { name: 'Double Bed Room', price: 4500, description: 'A cozy room with two beds for couples or friends.', image: 'double.jpg' },
+            { name: 'Suite Room', price: 10000, description: 'A luxurious suite for a comfortable stay.', image: 'suite.jpg' },
+            { name: 'Luxury Room', price: 15000, description: 'An exclusive room for those who demand the best.', image: 'luxury.jpeg' }
+        ];
+
+        function addRoom(name, price, description, imageUrl) {
+            rooms.push({ name, price, description, image: imageUrl });
+            generateRooms();
+        }
+
+        // Dynamically generate room cards
+        function generateRooms() {
+            const roomSection = document.getElementById('room-options');
+            roomSection.innerHTML = ''; // Clear existing room cards
+            rooms.forEach(room => {
+                const roomCard = document.createElement('div');
+                roomCard.classList.add('room');
+                roomCard.innerHTML = `
+                    <img src="${room.image}" alt="${room.name}">
+                    <h3>${room.name}</h3>
+                    <p>${room.description}</p>
+                    <p><strong>₱${room.price}</strong> per night</p>
+
+                    <button onclick="selectRoom('${room.name}', ${room.price})">Reserve Now</button>
+                `;
+                roomSection.appendChild(roomCard);
+            });
+        }
+
+        let selectedRoom = "";
+        let roomPrice = 0;
+
+        function selectRoom(room, price) {
+            selectedRoom = room;
+            roomPrice = price;
+            document.getElementById('form-container').style.display = 'block';
+        }
+
+        document.getElementById('reservation-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const contact = document.getElementById('contact').value;
+            const checkInDate = new Date(document.getElementById('check-in').value);
+            const checkOutDate = new Date(document.getElementById('check-out').value);
+
+            const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)); // Calculate number of nights
+
+            const totalPrice = roomPrice * nights;
+
+            // Display reservation details
+            document.getElementById('chosen-room').textContent = selectedRoom;
+            document.getElementById('customer-name').textContent = name;
+            document.getElementById('customer-email').textContent = email;
+            document.getElementById('customer-contact').textContent = contact;
+            document.getElementById('check-in-date').textContent = checkInDate.toDateString();
+            document.getElementById('check-out-date').textContent = checkOutDate.toDateString();
+            document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+
+            // Show the reservation details section
+            document.getElementById('reservation-details').style.display = 'block';
+            document.getElementById('form-container').style.display = 'none';
+        });
+
+        // Initial room generation
+        generateRooms();
+    </script>
+
+
+
+</body>
+</html>
